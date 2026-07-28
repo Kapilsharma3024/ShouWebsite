@@ -1,0 +1,313 @@
+{
+  "site": {
+    "name": "Success Academy",
+    "tagline": "Your Gateway to Government Jobs",
+    "description": "Premier coaching institute for UPSC, SSC, Banking, Railways, and all government job examinations."
+  },
+  "hero": {
+    "title": "Achieve Your Dream Government Job",
+    "subtitle": "Expert guidance for UPSC, SSC, Banking, Railways & more. Join thousands of successful candidates.",
+    "ctaText": "Explore Courses",
+    "ctaLink": "#courses",
+    "secondaryText": "Free Demo Class",
+    "secondaryLink": "#contact"
+  },
+  "about": {
+    "title": "Why Choose Success Academy?",
+    "description": "With over 10 years of excellence in government exam coaching, we provide comprehensive preparation with experienced faculty, structured study materials, and regular mock tests. Our results speak for themselves — 5000+ selections in various government exams.",
+    "stats": [
+      { "value": "10+", "label": "Years Experience" },
+      { "value": "5000+", "label": "Selections" },
+      { "value": "50+", "label": "Expert Faculty" },
+      { "value": "200+", "label": "Study Centers" }
+    ]
+  },
+  "courses": [
+    {
+      "id": 1, "title": "UPSC CSE", "category": "Civil Services",
+      "description": "Complete preparation for IAS, IPS, IFS exams with GS, CSAT, and optional subjects.",
+      "duration": "12 Months", "fee": "Rs. 85,000", "featured": true,
+      "highlights": ["Prelims + Mains + Interview", "Daily Current Affairs", "Test Series Included"]
+    },
+    {
+      "id": 2, "title": "SSC CGL", "category": "Staff Selection",
+      "description": "Comprehensive coaching for SSC CGL, CHSL, MTS with focused approach on all tiers.",
+      "duration": "8 Months", "fee": "Rs. 35,000", "featured": true,
+      "highlights": ["Tier I & II Coverage", "Maths & Reasoning Focus", "Monthly Mocks"]
+    },
+    {
+      "id": 3, "title": "Bank PO/Clerk", "category": "Banking",
+      "description": "SBI, IBPS PO & Clerk exam preparation with quantitative aptitude and reasoning mastery.",
+      "duration": "6 Months", "fee": "Rs. 28,000", "featured": true,
+      "highlights": ["Computer-Based Tests", "Speed Maths", "Interview Prep"]
+    },
+    {
+      "id": 4, "title": "Railways RRB", "category": "Railways",
+      "description": "RRB NTPC, Group D, ALP exam coaching with technical and non-technical syllabus coverage.",
+      "duration": "6 Months", "fee": "Rs. 22,000", "featured": false,
+      "highlights": ["Technical Subjects", "General Science", "Practice Sets"]
+    },
+    {
+      "id": 5, "title": "State PSC", "category": "State Services",
+      "description": "State-wise PSC exam preparation covering all state-specific syllabus and current affairs.",
+      "duration": "10 Months", "fee": "Rs. 45,000", "featured": false,
+      "highlights": ["State-Specific GK", "Bilingual Material", "Answer Writing"]
+    },
+    {
+      "id": 6, "title": "Defence Exams", "category": "Defence",
+      "description": "NDA, CDS, AFCAT exam coaching with physical training and written exam preparation.",
+      "duration": "12 Months", "fee": "Rs. 55,000", "featured": false,
+      "highlights": ["SSB Interview Prep", "Physical Training", "Mathematics Focus"]
+    },
+    {
+      "id": 7, "title": "Teaching Exams", "category": "Teaching",
+      "description": "CTET, UPTET, KVS, NVS, DSSSB preparation with pedagogy and subject knowledge.",
+      "duration": "6 Months", "fee": "Rs. 25,000", "featured": false,
+      "highlights": ["Child Pedagogy", "Subject Mastery", "Practice Papers"]
+    },
+    {
+      "id": 8, "title": "Police & Defence", "category": "Police",
+      "description": "UP Police, Delhi Police, BSF, CRPF constable & SI exam preparation.",
+      "duration": "6 Months", "fee": "Rs. 20,000", "featured": false,
+      "highlights": ["Physical Test Prep", "GK & Current Affairs", "Reasoning Focus"]
+    }
+  ],
+  "features": [
+    {
+      "id": 1, "icon": "book-open", "title": "Expert Faculty",
+      "description": "Learn from experienced educators with years of domain expertise in competitive exams."
+    },
+    {
+      "id": 2, "icon": "monitor", "title": "Online & Offline",
+      "description": "Flexible learning modes — attend classes in-center or join live online from anywhere."
+    },
+    {
+      "id": 3, "icon": "file-text", "title": "Study Material",
+      "description": "Comprehensive, regularly updated study material curated by subject matter experts."
+    },
+    {
+      "id": 4, "icon": "bar-chart", "title": "Mock Tests",
+      "description": "Regular test series simulating real exam patterns with detailed performance analytics."
+    },
+    {
+      "id": 5, "icon": "users", "title": "Doubt Sessions",
+      "description": "Dedicated doubt-clearing sessions with personalized attention to every student."
+    },
+    {
+      "id": 6, "icon": "trending-up", "title": "Proven Results",
+      "description": "Track record of 5000+ selections across various government examinations."
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1, "name": "Rahul Sharma", "exam": "UPSC CSE 2025 - AIR 128",
+      "text": "Success Academy's structured approach and experienced faculty helped me crack UPSC in my first attempt. The mock interview sessions were invaluable."
+    },
+    {
+      "id": 2, "name": "Priya Patel", "exam": "SSC CGL 2025 - AIR 45",
+      "text": "The maths and reasoning modules at Success Academy are outstanding. I went from struggling with quant to scoring 180+ in Tier II."
+    },
+    {
+      "id": 3, "name": "Amit Kumar", "exam": "SBI PO 2025",
+      "text": "Thanks to the comprehensive banking course, I cleared SBI PO, IBPS PO, and RBI Grade B all in one year. Best decision to join Success Academy."
+    }
+  ],
+  "successStories": [
+    {
+      "id": 1, "name": "Vikram Singh", "exam": "IAS", "rank": "AIR 87", "year": "2025",
+      "photo": "", "state": "Uttar Pradesh",
+      "story": "From a small village in UP to becoming an IAS officer, Vikram credits his success to the dedicated mentorship at Success Academy. He studied with us for 2 years."
+    },
+    {
+      "id": 2, "name": "Neha Gupta", "exam": "IPS", "rank": "AIR 142", "year": "2025",
+      "photo": "", "state": "Rajasthan",
+      "story": "Neha cleared UPSC CSE in her second attempt after joining our foundation course. The answer writing practice and mock interviews made all the difference."
+    },
+    {
+      "id": 3, "name": "Rajesh Meena", "exam": "SSC CGL", "rank": "AIR 12", "year": "2025",
+      "photo": "", "state": "Madhya Pradesh",
+      "story": "Rajesh secured AIR 12 in SSC CGL 2025. Our tier-wise preparation strategy and daily practice sets helped him achieve this remarkable rank."
+    },
+    {
+      "id": 4, "name": "Sunita Yadav", "exam": "IBPS PO", "rank": "Selected in SBI & IBPS", "year": "2025",
+      "photo": "", "state": "Bihar",
+      "story": "Sunita got selected in both SBI PO and IBPS PO. She says the speed maths techniques and mock interview preparation were game-changers."
+    },
+    {
+      "id": 5, "name": "Arun Tiwari", "exam": "RRB NTPC", "rank": "Selected", "year": "2025",
+      "photo": "", "state": "Jharkhand",
+      "story": "Arun cleared RRB NTPC and RRB Group D both. The bilingual study material and regular GK updates helped him excel in the railway exams."
+    },
+    {
+      "id": 6, "name": "Kavita Sharma", "exam": "CTET & UPTET", "rank": "140+ Marks", "year": "2025",
+      "photo": "", "state": "Delhi",
+      "story": "Kavita scored 140+ in both CTET and UPTET. The child pedagogy notes and subject-wise practice tests were instrumental in her success."
+    },
+    {
+      "id": 7, "name": "Deepak Verma", "exam": "NDA", "rank": "Recommended by SSB", "year": "2025",
+      "photo": "", "state": "Haryana",
+      "story": "Deepak cleared NDA written and was recommended by SSB. Our physical training and SSB interview coaching prepared him holistically."
+    },
+    {
+      "id": 8, "name": "Pooja Rani", "exam": "UP Police SI", "rank": "Selected", "year": "2025",
+      "photo": "", "state": "Uttar Pradesh",
+      "story": "Pooja cleared UP Police SI exam with our focused preparation module covering GK, reasoning, and physical efficiency test training."
+    }
+  ],
+  "testSeries": {
+    "title": "Daily & Weekly Test Series",
+    "description": "Stay exam-ready with our comprehensive test series program. Practice daily topic-wise tests and full-length weekly mock exams.",
+    "dailyTests": [
+      { "day": "Monday", "subject": "Quantitative Aptitude", "topics": "Number System, Simplification", "questions": 25, "time": "20 min" },
+      { "day": "Tuesday", "subject": "Reasoning Ability", "topics": "Puzzles, Seating Arrangement", "questions": 25, "time": "25 min" },
+      { "day": "Wednesday", "subject": "English Language", "topics": "Reading Comprehension, Grammar", "questions": 25, "time": "20 min" },
+      { "day": "Thursday", "subject": "General Awareness", "topics": "Current Affairs, Static GK", "questions": 25, "time": "15 min" },
+      { "day": "Friday", "subject": "Quantitative Aptitude", "topics": "Data Interpretation, Arithmetic", "questions": 25, "time": "25 min" },
+      { "day": "Saturday", "subject": "Mixed Subjects", "topics": "Mini Mock (All Subjects)", "questions": 50, "time": "40 min" },
+      { "day": "Sunday", "subject": "Full Length Mock", "topics": "Complete Syllabus", "questions": 100, "time": "60 min" }
+    ],
+    "weeklyTests": [
+      { "name": "Weekly Full Mock Test 1", "subjects": "Quant + Reasoning + English + GA", "questions": 100, "time": "60 min", "mode": "Online & Offline" },
+      { "name": "Weekly Full Mock Test 2", "subjects": "Subject-Wise Deep Test", "questions": 150, "time": "90 min", "mode": "Online & Offline" },
+      { "name": "Weekly Full Mock Test 3", "subjects": "Previous Year Pattern", "questions": 100, "time": "60 min", "mode": "Online & Offline" },
+      { "name": "Weekly Full Mock Test 4", "subjects": "Advanced Level Test", "questions": 150, "time": "90 min", "mode": "Online Only" }
+    ],
+    "pricing": {
+      "monthly": "Rs. 499",
+      "quarterly": "Rs. 1,299",
+      "yearly": "Rs. 3,999"
+    },
+    "features": [
+      "Instant result & detailed solution PDF",
+      "All India Rank after each test",
+      "AI-based performance analytics",
+      "Chapter-wise weak area identification",
+      "Compare score with toppers",
+      "24x7 access from mobile & desktop"
+    ]
+  },
+  "studyMaterials": {
+    "title": "Study Material & Resources",
+    "description": "Access high-quality study materials, daily current affairs, notes, and PDFs curated by our expert faculty.",
+    "resources": [
+      { "title": "Daily Current Affairs", "icon": "newspaper", "description": "Updated daily news digest covering national, international, sports, economy, and schemes for all govt exams.", "link": "#" },
+      { "title": "Daily Vocabulary", "icon": "translate", "description": "Learn 10 new English words daily with meaning, synonyms, antonyms, and usage examples.", "link": "#" },
+      { "title": "Monthly Current Affairs PDF", "icon": "file-pdf", "description": "Comprehensive monthly compilation of all important current affairs in downloadable PDF format.", "link": "#" },
+      { "title": "Subject-wise Notes", "icon": "book", "description": "Chapter-wise detailed notes for Quant, Reasoning, English, GS, and all exam subjects.", "link": "#" },
+      { "title": "Previous Year Papers", "icon": "history", "description": "Last 10 years solved papers of UPSC, SSC, Banking, Railways, and other government exams.", "link": "#" },
+      { "title": "Video Lectures", "icon": "play-circle", "description": "Recorded video lectures by top faculty covering complete syllabus at your own pace.", "link": "#" }
+    ]
+  },
+  "faculty": [
+    {
+      "id": 1, "name": "Dr. Suresh Kumar", "subject": "General Studies & Polity", "experience": "18 Years",
+      "qualification": "PhD in Political Science, Ex-UPSC Interview Panelist",
+      "bio": "Dr. Suresh has mentored over 500 IAS/IPS officers. His GS classes are known for conceptual clarity and exam-oriented approach."
+    },
+    {
+      "id": 2, "name": "Mr. Amit Srivastava", "subject": "Quantitative Aptitude", "experience": "12 Years",
+      "qualification": "M.Sc Mathematics, IIT Roorkee Alumnus",
+      "bio": "Amit sir is renowned for his speed calculation techniques. His students consistently score 45+ in quantitative aptitude sections."
+    },
+    {
+      "id": 3, "name": "Mrs. Anita Sharma", "subject": "English Language", "experience": "15 Years",
+      "qualification": "MA English, PhD Scholar, Cambridge CELTA Certified",
+      "bio": "Anita ma'am specializes in grammar, vocabulary, and reading comprehension. Her unique teaching methodology helps even Hindi-medium students excel in English."
+    },
+    {
+      "id": 4, "name": "Mr. Vikas Tiwari", "subject": "Reasoning & Logical Ability", "experience": "10 Years",
+      "qualification": "B.Tech CS, Former Bank PO",
+      "bio": "Vikas sir teaches reasoning with a practical approach. His puzzle-solving shortcuts and tricks book is a bestseller among SSC and Bank aspirants."
+    },
+    {
+      "id": 5, "name": "Dr. Meenakshi Rao", "subject": "Current Affairs & GK", "experience": "14 Years",
+      "qualification": "PhD in History, Author of 3 GK Books",
+      "bio": "Dr. Meenakshi's daily current affairs sessions are the most attended classes. Her monthly compilations are used by students across India."
+    },
+    {
+      "id": 6, "name": "Mr. Rajesh Pandey", "subject": "CSAT & Aptitude", "experience": "11 Years",
+      "qualification": "MBA IIM Lucknow, Ex-Civil Servant",
+      "bio": "Rajesh sir brings practical insights from his civil services background. His CSAT classes have a 95% pass rate among UPSC aspirants."
+    }
+  ],
+  "faq": [
+    {
+      "question": "What courses does Success Academy offer?",
+      "answer": "We offer comprehensive coaching for UPSC CSE, SSC (CGL/CHSL/MTS/GD), Banking (IBPS/SBI/RBI), Railways (RRB NTPC/Group D), State PSC, Defence (NDA/CDS), Teaching Exams (CTET/UPTET), and Police Recruitment exams."
+    },
+    {
+      "question": "Do you offer both online and offline classes?",
+      "answer": "Yes, we offer both online live classes and offline classroom programs at our centers. Online students get access to live interactive sessions, recorded lectures, and PDF notes. Offline students benefit from face-to-face interaction and our digital classrooms."
+    },
+    {
+      "question": "How does the Daily & Weekly Test Series work?",
+      "answer": "Daily tests (25-50 questions) are conducted Monday through Saturday covering specific subjects. Sunday is a full-length mock test (100 questions). All tests come with instant results, detailed solutions, and All India Ranking."
+    },
+    {
+      "question": "What is the fee structure for various courses?",
+      "answer": "Fees vary by course: UPSC CSE (Rs. 85,000/year), SSC CGL (Rs. 35,000/8 months), Bank PO (Rs. 28,000/6 months), Railways (Rs. 22,000/6 months), Teaching Exams (Rs. 25,000/6 months). We also offer EMI options and scholarships for meritorious students."
+    },
+    {
+      "question": "Do you provide study material?",
+      "answer": "Yes, all enrolled students receive comprehensive study materials including subject-wise notes, practice workbooks, current affairs compilations, previous year question papers, and monthly current affairs PDFs."
+    },
+    {
+      "question": "Is there a demo class available before enrollment?",
+      "answer": "Absolutely! We offer 3 free demo classes so you can experience our teaching methodology firsthand. Fill out the contact form or call us to schedule your demo sessions."
+    },
+    {
+      "question": "What is the batch timing for classes?",
+      "answer": "We run multiple batches: Morning (7:00 AM - 9:30 AM), Afternoon (2:00 PM - 4:30 PM), and Evening (5:30 PM - 8:00 PM). Weekend batches are also available for working professionals."
+    },
+    {
+      "question": "Do you help with exam form filling and guidance?",
+      "answer": "Yes, we provide complete guidance on exam notifications, application form filling, admit card download, and result checking. Our counselors keep students updated on all important dates."
+    }
+  ],
+  "batches": [
+    {
+      "id": 1, "name": "Morning Batch", "time": "7:00 AM - 9:30 AM", "days": "Mon-Sat",
+      "mode": "Offline & Online", "subjects": "Full Syllabus", "seats": "30/50 Available"
+    },
+    {
+      "id": 2, "name": "Afternoon Batch", "time": "2:00 PM - 4:30 PM", "days": "Mon-Sat",
+      "mode": "Offline & Online", "subjects": "Full Syllabus", "seats": "20/50 Available"
+    },
+    {
+      "id": 3, "name": "Evening Batch", "time": "5:30 PM - 8:00 PM", "days": "Mon-Sat",
+      "mode": "Offline & Online", "subjects": "Full Syllabus", "seats": "15/50 Available"
+    },
+    {
+      "id": 4, "name": "Weekend Batch", "time": "9:00 AM - 5:00 PM", "days": "Sat-Sun",
+      "mode": "Offline & Online", "subjects": "Full Syllabus", "seats": "25/50 Available"
+    },
+    {
+      "id": 5, "name": "Online Live Batch", "time": "8:00 PM - 10:30 PM", "days": "Mon-Sat",
+      "mode": "Online Only", "subjects": "Full Syllabus", "seats": "Unlimited"
+    }
+  ],
+  "examNotifications": [
+    {
+      "id": 1, "title": "UPSC CSE 2026 Notification Released", "date": "2026-02-10",
+      "exam": "UPSC", "summary": "UPSC has released the Civil Services Examination 2026 notification. Approximately 1,056 vacancies announced.",
+      "link": "#"
+    },
+    {
+      "id": 2, "title": "SSC CGL 2026 Tier-I Exam Date Announced", "date": "2026-05-15",
+      "exam": "SSC", "summary": "SSC CGL Tier-I exam scheduled from June 15 to July 10, 2026. Admit cards to be released soon.",
+      "link": "#"
+    },
+    {
+      "id": 3, "title": "IBPS PO 2026 Notification Expected Soon", "date": "2026-07-01",
+      "exam": "Banking", "summary": "IBPS is expected to release PO/MT 2026 notification in July. Approximately 5,500+ vacancies expected this year.",
+      "link": "#"
+    },
+    {
+      "id": 4, "title": "RRB NTPC 2026 CBT-2 Result Declared", "date": "2026-06-20",
+      "exam": "Railways", "summary": "Railway Recruitment Board has declared NTPC CBT-2 results. Check your score on the official RRB website.",
+      "link": "#"
+    }
+  ],
+  "posters": [],
+  "blogs": []
+}

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Success Academy - Government Job Preparation</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" />
+  </head>
+  <body>
+    <div id="loader" class="loader"><div class="loader-spinner"></div></div>
+
+    <nav class="nav" id="navbar">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">Success<span>Academy</span></a>
+        <div class="nav-links" id="navLinks">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#courses">Courses</a>
+          <a href="#success-stories">Toppers</a>
+          <a href="#test-series">Tests</a>
+          <a href="#faculty">Faculty</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-actions">
+          <a href="/admin/" class="btn-admin">Admin</a>
+          <a href="#contact" class="btn-enroll">Enroll Now</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <section id="home" class="hero">
+      <div class="hero-bg">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="hero-grid"></div>
+      </div>
+      <div class="hero-content">
+        <span class="hero-badge" id="heroBadge">Trusted by 5000+ Students</span>
+        <h1 class="hero-title" id="heroTitle">Achieve Your Dream<br>Government Job</h1>
+        <p class="hero-desc" id="heroDesc">
+          Expert guidance for UPSC, SSC, Banking, Railways & more.<br>
+          Join thousands of successful candidates.
+        </p>
+        <div class="hero-buttons">
+          <a href="#courses" class="btn-primary" id="heroCta">Explore Courses</a>
+          <a href="#contact" class="btn-outline" id="heroSecondary">Free Demo Class</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-content">
+            <span class="section-badge">About Us</span>
+            <h2 class="section-title" id="aboutTitle">Why Choose Success Academy?</h2>
+            <p class="about-text" id="aboutDesc">
+              With over 10 years of excellence in government exam coaching, we provide comprehensive
+              preparation with experienced faculty, structured study materials, and regular mock tests.
+            </p>
+            <div class="about-stats" id="aboutStats"></div>
+          </div>
+          <div class="about-image">
+            <div class="about-img-placeholder">
+              <i class="ri-building-4-line"></i>
+              <span>Success Academy Campus</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="courses" class="courses">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Our Courses</span>
+          <h2 class="section-title">Prepare for Top Government Exams</h2>
+          <p class="section-desc">Comprehensive coaching programs designed for success in competitive examinations.</p>
+        </div>
+        <div class="courses-grid" id="coursesGrid"></div>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Why We Stand Out</span>
+          <h2 class="section-title">Everything You Need to Succeed</h2>
+        </div>
+        <div class="features-grid" id="featuresGrid"></div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Testimonials</span>
+          <h2 class="section-title">What Our Students Say</h2>
+        </div>
+        <div class="testimonials-grid" id="testimonialsGrid"></div>
+      </div>
+    </section>
+
+    <section id="blogs" class="blogs">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Latest Updates</span>
+          <h2 class="section-title">News & Announcements</h2>
+        </div>
+        <div class="blogs-grid" id="blogsGrid">
+          <div class="no-content">No blog posts yet. Admin can add blog content from the panel.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <span class="section-badge">Get In Touch</span>
+            <h2 class="section-title">Start Your Journey Today</h2>
+            <p>Fill out the form and our counselors will get back to you within 24 hours.</p>
+            <div class="contact-details">
+              <div class="contact-item">
+                <i class="ri-map-pin-line"></i>
+                <div><strong>Address</strong><span>123 Education Lane, Knowledge City</span></div>
+              </div>
+              <div class="contact-item">
+                <i class="ri-phone-line"></i>
+                <div><strong>Phone</strong><span>+91 98765 43210</span></div>
+              </div>
+              <div class="contact-item">
+                <i class="ri-mail-line"></i>
+                <div><strong>Email</strong><span>info@successacademy.com</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="contact-form-wrapper">
+            <form class="contact-form" id="contactForm">
+              <div class="form-group">
+                <input type="text" id="cfName" placeholder="Your Name" required />
+              </div>
+              <div class="form-group">
+                <input type="email" id="cfEmail" placeholder="Your Email" required />
+              </div>
+              <div class="form-group">
+                <input type="tel" id="cfPhone" placeholder="Phone Number" />
+              </div>
+              <div class="form-group">
+                <select id="cfCourse">
+                  <option value="">Interested Course</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <textarea id="cfMessage" rows="4" placeholder="Your Message" required></textarea>
+              </div>
+              <button type="submit" class="btn-primary btn-full">Send Enquiry <i class="ri-send-plane-line"></i></button>
+              <div class="form-status" id="formStatus"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="success-stories" class="success-stories">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Our Pride</span>
+          <h2 class="section-title">Student Success Stories</h2>
+          <p class="section-desc">Meet our achievers who cracked government exams and made us proud.</p>
+        </div>
+        <div class="stories-grid" id="storiesGrid"></div>
+      </div>
+    </section>
+
+    <section id="test-series" class="test-series">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Stay Exam Ready</span>
+          <h2 class="section-title" id="tsTitle">Daily & Weekly Test Series</h2>
+          <p class="section-desc" id="tsDesc">Stay exam-ready with our comprehensive test series program. Practice daily topic-wise tests and full-length mock exams.</p>
+        </div>
+        <div class="ts-pricing" id="tsPricing"></div>
+        <div class="ts-tabs">
+          <button class="ts-tab active" data-tab="daily">Daily Tests</button>
+          <button class="ts-tab" data-tab="weekly">Weekly Tests</button>
+          <button class="ts-tab" data-tab="ts-features">Features</button>
+        </div>
+        <div class="ts-content" id="tsDailyContent"></div>
+        <div class="ts-content hidden" id="tsWeeklyContent"></div>
+        <div class="ts-content hidden" id="tsFeaturesContent"></div>
+      </div>
+    </section>
+
+    <section id="study-materials" class="study-materials">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Learning Resources</span>
+          <h2 class="section-title" id="smTitle">Study Material & Resources</h2>
+          <p class="section-desc" id="smDesc">Access high-quality study materials, daily current affairs, notes, and PDFs curated by our expert faculty.</p>
+        </div>
+        <div class="materials-grid" id="materialsGrid"></div>
+      </div>
+    </section>
+
+    <section id="faculty" class="faculty-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Meet Our Team</span>
+          <h2 class="section-title">Our Expert Faculty</h2>
+          <p class="section-desc">Learn from the best educators with years of experience in competitive exam coaching.</p>
+        </div>
+        <div class="faculty-grid" id="facultyGrid"></div>
+      </div>
+    </section>
+
+    <section id="batches" class="batches-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Join a Batch</span>
+          <h2 class="section-title">Batch Timings & Schedule</h2>
+          <p class="section-desc">Choose from multiple batches that fit your schedule. Limited seats available.</p>
+        </div>
+        <div class="batches-table-wrapper">
+          <table class="batches-table" id="batchesTable">
+            <thead><tr><th>Batch</th><th>Timing</th><th>Days</th><th>Mode</th><th>Subjects</th><th>Availability</th></tr></thead>
+            <tbody id="batchesBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Got Questions?</span>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-list" id="faqList"></div>
+      </div>
+    </section>
+
+    <section id="exam-notifications" class="exam-notifications">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Stay Updated</span>
+          <h2 class="section-title">Latest Exam Notifications</h2>
+          <p class="section-desc">Stay informed about upcoming government exam notifications, dates, and results.</p>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+          <div class="no-content">No notifications yet. Check back soon.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#" class="footer-logo">Success<span>Academy</span></a>
+            <p>Your trusted partner in government job exam preparation. Transforming aspirations into achievements since 2014.</p>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <a href="#courses">Courses</a>
+            <a href="#about">About Us</a>
+            <a href="#features">Features</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <div class="footer-links">
+            <h4>Courses</h4>
+            <a href="#courses">UPSC CSE</a>
+            <a href="#courses">SSC CGL</a>
+            <a href="#courses">Bank PO</a>
+            <a href="#courses">Railways</a>
+          </div>
+          <div class="footer-links">
+            <h4>Contact</h4>
+            <span><i class="ri-map-pin-line"></i> 123 Education Lane</span>
+            <span><i class="ri-phone-line"></i> +91 98765 43210</span>
+            <span><i class="ri-mail-line"></i> info@successacademy.com</span>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Success Academy. All rights reserved.</p>
+          <div class="footer-social">
+            <a href="#"><i class="ri-facebook-fill"></i></a>
+            <a href="#"><i class="ri-twitter-x-fill"></i></a>
+            <a href="#"><i class="ri-instagram-line"></i></a>
+            <a href="#"><i class="ri-youtube-fill"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

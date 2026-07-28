@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voxelo 3D - Admin Panel</title>
+<link rel="icon" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f172a;--bg2:#1e293b;--bg3:#334155;--primary:#6366f1;--primary-hover:#4f46e5;
+  --text:#e2e8f0;--text2:#94a3b8;--danger:#ef4444;--danger-hover:#dc2626;--success:#22c55e;
+  --warning:#f59e0b;--radius:8px;--radius-sm:4px;--shadow:0 4px 24px rgba(0,0,0,.3);
+  --sidebar-w:260px;--header-h:64px;
+}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
+a{color:var(--primary);text-decoration:none}
+button{cursor:pointer;font-family:inherit}
+input,textarea,select{font-family:inherit;font-size:inherit}
+
+/* Login */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.login-card{background:var(--bg2);border-radius:var(--radius);padding:48px;width:100%;max-width:420px;box-shadow:var(--shadow)}
+.login-card h1{font-size:1.5rem;font-weight:700;margin-bottom:4px}
+.login-card p{color:var(--text2);font-size:.875rem;margin-bottom:32px}
+.login-card .brand{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.login-card .brand i{font-size:2rem;color:var(--primary)}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:6px;color:var(--text2)}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--bg3);border-radius:var(--radius-sm);color:var(--text);outline:none;transition:border-color .2s;font-size:.875rem}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--primary)}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* Buttons */
+.btn{padding:10px 20px;border-radius:var(--radius-sm);font-weight:500;font-size:.875rem;display:inline-flex;align-items:center;gap:8px;border:none;transition:background .2s,opacity .2s}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover:not(:disabled){background:var(--primary-hover)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover:not(:disabled){background:var(--danger-hover)}
+.btn-outline{background:transparent;border:1px solid var(--bg3);color:var(--text)}
+.btn-outline:hover:not(:disabled){background:var(--bg3)}
+.btn-sm{padding:6px 12px;font-size:.8125rem}
+.btn-block{width:100%;justify-content:center}
+
+/* Layout */
+.app{display:none}
+.app.active{display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar-w);background:var(--bg2);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;display:flex;flex-direction:column;border-right:1px solid var(--bg3)}
+.sidebar-header{padding:20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--bg3)}
+.sidebar-header i{font-size:1.5rem;color:var(--primary)}
+.sidebar-header span{font-weight:700;font-size:1.125rem}
+.sidebar-nav{flex:1;padding:12px 0}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;color:var(--text2);cursor:pointer;transition:background .15s,color .15s;font-size:.875rem;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:var(--bg3);color:var(--primary);font-weight:500;border-right:3px solid var(--primary)}
+.nav-item i{font-size:1.125rem;width:20px;text-align:center}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--bg3)}
+.sidebar-footer .btn{width:100%;justify-content:center}
+
+.main{margin-left:var(--sidebar-w);flex:1;min-width:0}
+.header{height:var(--header-h);display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:var(--bg2);border-bottom:1px solid var(--bg3);position:sticky;top:0;z-index:50}
+.header h2{font-size:1.125rem;font-weight:600}
+.content{padding:32px}
+
+/* Cards */
+.card{background:var(--bg2);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid var(--bg3)}
+.card+.card{margin-top:24px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--bg3)}
+.card-header h3{font-size:1rem;font-weight:600}
+.card-header .btn{margin-left:auto}
+
+/* Dashboard stats */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;margin-bottom:32px}
+.stat-card{background:var(--bg2);border-radius:var(--radius);padding:20px;border:1px solid var(--bg3);display:flex;align-items:center;gap:16px}
+.stat-card i{font-size:1.75rem;color:var(--primary);width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(99,102,241,.1);border-radius:var(--radius)}
+.stat-card .stat-value{font-size:1.75rem;font-weight:700}
+.stat-card .stat-label{color:var(--text2);font-size:.8125rem;margin-top:2px}
+
+/* Data tables */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.875rem}
+th{text-align:left;padding:12px 16px;border-bottom:1px solid var(--bg3);color:var(--text2);font-weight:500;font-size:.8125rem;white-space:nowrap}
+td{padding:10px 16px;border-bottom:1px solid var(--bg3)}
+td .actions{display:flex;gap:8px}
+
+/* Forms in cards */
+.inline-form{display:grid;gap:16px}
+.inline-form .form-row{display:grid;gap:16px}
+.inline-form .form-actions{display:flex;gap:12px;margin-top:8px}
+
+/* Items list */
+.items-list{display:flex;flex-direction:column;gap:12px}
+.item-row{display:flex;align-items:flex-start;gap:16px;padding:16px;background:var(--bg);border-radius:var(--radius-sm);border:1px solid var(--bg3)}
+.item-row .item-info{flex:1;min-width:0}
+.item-row .item-info h4{font-size:.875rem;font-weight:600;margin-bottom:2px}
+.item-row .item-info p{font-size:.8125rem;color:var(--text2)}
+.item-row .item-actions{display:flex;gap:8px;flex-shrink:0}
+
+/* Alerts */
+.alert{padding:12px 16px;border-radius:var(--radius-sm);font-size:.875rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.alert-error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--danger)}
+.alert-success{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:var(--success)}
+.alert-info{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);color:var(--primary)}
+
+/* Empty state */
+.empty-state{text-align:center;padding:48px 24px;color:var(--text2)}
+.empty-state i{font-size:3rem;margin-bottom:16px;opacity:.3}
+.empty-state p{font-size:.875rem}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--bg2);border-radius:var(--radius);padding:32px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow)}
+.modal h3{font-size:1.125rem;font-weight:600;margin-bottom:24px}
+.modal .form-actions{display:flex;gap:12px;margin-top:24px;justify-content:flex-end}
+
+/* Tags / pills */
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.75rem;background:var(--bg3);color:var(--text2)}
+.tag-primary{background:rgba(99,102,241,.15);color:var(--primary)}
+
+/* Loading */
+.spinner{width:20px;height:20px;border:2px solid var(--text2);border-top-color:var(--primary);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-wrap{display:flex;align-items:center;justify-content:center;padding:64px 24px;color:var(--text2);gap:12px;font-size:.875rem}
+
+/* Responsive */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .header{padding:0 16px}
+  .content{padding:16px}
+  .form-row{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .login-card{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginWrap" class="login-wrap">
+  <form class="login-card" id="loginForm">
+    <div class="brand">
+      <i class="ri-admin-line"></i>
+      <div><h1>Voxelo 3D</h1><p>Admin Panel</p></div>
+    </div>
+    <div id="loginError"></div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter admin password" required autofocus>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+      <i class="ri-login-box-line"></i> Sign In
+    </button>
+  </form>
+</div>
+
+<!-- APP -->
+<div id="app" class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <i class="ri-admin-line"></i>
+      <span>Voxelo Admin</span>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-outline" id="logoutBtn"><i class="ri-logout-box-r-line"></i> Logout</button>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="header">
+      <h2 id="pageTitle">Dashboard</h2>
+      <span style="font-size:.8125rem;color:var(--text2)" id="headerBadge"></span>
+    </header>
+    <div class="content" id="mainContent"></div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)}
+var $$=function(s){return document.querySelectorAll(s)}
+
+var token=localStorage.getItem('voxelo_admin_token')
+var activeTab='dashboard'
+var contentData=null
+var loading=false
+
+var navItems=[
+  {id:'dashboard',label:'Dashboard',icon:'ri-dashboard-line'},
+  {id:'site',label:'Site Settings',icon:'ri-settings-line'},
+  {id:'hero',label:'Hero Section',icon:'ri-image-line'},
+  {id:'about',label:'About Section',icon:'ri-information-line'},
+  {id:'courses',label:'Courses',icon:'ri-book-open-line'},
+  {id:'features',label:'Features',icon:'ri-star-line'},
+  {id:'testimonials',label:'Testimonials',icon:'ri-chat-quote-line'},
+  {id:'success-stories',label:'Success Stories',icon:'ri-trophy-line'},
+  {id:'test-series',label:'Test Series',icon:'ri-file-list-3-line'},
+  {id:'study-materials',label:'Study Materials',icon:'ri-folder-line'},
+  {id:'faculty',label:'Faculty',icon:'ri-user-star-line'},
+  {id:'batches',label:'Batches',icon:'ri-group-line'},
+  {id:'faq',label:'FAQ',icon:'ri-question-answer-line'},
+  {id:'exam-notifications',label:'Exam Notifications',icon:'ri-notification-3-line'},
+  {id:'posters',label:'Posters',icon:'ri-gallery-line'},
+  {id:'blogs',label:'Blogs',icon:'ri-article-line'}
+]
+
+function api(path,opts){
+  opts=opts||{}
+  var headers={'Content-Type':'application/json'}
+  if(token) headers['Authorization']='Bearer '+token
+  return fetch(path,{method:opts.method||'GET',headers:headers,body:opts.body?JSON.stringify(opts.body):undefined})
+    .then(function(r){
+      if(!r.ok) return r.text().then(function(t){throw new Error(t||'Request failed ('+r.status+')')})
+      var ct=r.headers.get('content-type')
+      if(ct&&ct.indexOf('application/json')!==-1) return r.json()
+      return r.text()
+    })
+}
+
+function showAlert(parent,msg,type){
+  parent=typeof parent==='string'?$(parent):parent
+  if(!parent) return
+  var existing=parent.querySelector('.alert')
+  if(existing) existing.remove()
+  var icons={error:'ri-error-warning-line',success:'ri-check-line',info:'ri-information-line'}
+  var div=document.createElement('div')
+  div.className='alert alert-'+type
+  div.innerHTML='<i class="'+icons[type]+'"></i> '+h(msg)
+  parent.prepend(div)
+  if(type==='success') setTimeout(function(){if(div.parentNode) div.remove()},5000)
+}
+
+function h(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function setLoading(el,state){
+  if(state){el.innerHTML='<div class="loading-wrap"><div class="spinner"></div> Loading...</div>';return}
+}
+
+function formatDate(d){if(!d) return '';return new Date(d).toLocaleDateString('en-IN',{year:'numeric',month:'short',day:'numeric'})}
+
+function toggleModal(html){
+  var ov=$('#modalOverlay')
+  var box=$('#modalBox')
+  if(html){box.innerHTML=html;ov.classList.add('active')}
+  else{ov.classList.remove('active')}
+}
+$('#modalOverlay').addEventListener('click',function(e){if(e.target===this) toggleModal(null)})
+
+// ==== LOGIN ====
+$('#loginForm').addEventListener('submit',function(e){
+  e.preventDefault()
+  var pw=$('#password').value
+  var btn=$('#loginBtn')
+  btn.disabled=true
+  btn.innerHTML='<div class="spinner"></div> Signing in...'
+  var err=$('#loginError')
+  err.innerHTML=''
+  fetch('/api/auth/login',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({password:pw})
+  }).then(function(r){
+    if(!r.ok) return r.text().then(function(t){throw new Error(t||'Invalid credentials')})
+    return r.json()
+  }).then(function(data){
+    token=data.token||data.access_token||data.jwt
+    if(!token) throw new Error('No token received')
+    localStorage.setItem('voxelo_admin_token',token)
+    $('#loginWrap').style.display='none'
+    $('#app').classList.add('active')
+    initApp()
+  }).catch(function(e){
+    err.innerHTML='<div class="alert alert-error"><i class="ri-error-warning-line"></i> '+h(e.message)+'</div>'
+  }).finally(function(){
+    btn.disabled=false
+    btn.innerHTML='<i class="ri-login-box-line"></i> Sign In'
+  })
+})
+
+$('#logoutBtn').addEventListener('click',function(){
+  localStorage.removeItem('voxelo_admin_token')
+  token=null
+  contentData=null
+  $('#app').classList.remove('active')
+  $('#loginWrap').style.display=''
+  $('#password').value=''
+})
+
+// ==== APP INIT ====
+function initApp(){
+  renderSidebar()
+  loadContent()
+}
+
+function renderSidebar(){
+  var nav=$('#sidebarNav')
+  nav.innerHTML=navItems.map(function(item){
+    var cls=item.id===activeTab?'nav-item active':'nav-item'
+    return '<button class="'+cls+'" data-tab="'+item.id+'"><i class="'+item.icon+'"></i> '+item.label+'</button>'
+  }).join('')
+  nav.querySelectorAll('.nav-item').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      activeTab=this.dataset.tab
+      renderSidebar()
+      renderContent()
+    })
+  })
+}
+
+function loadContent(){
+  setLoading($('#mainContent'),true)
+  api('/api/content').then(function(data){
+    contentData=data
+    renderContent()
+  }).catch(function(e){
+    if(e.message.indexOf('401')!==-1||e.message.indexOf('403')!==-1){
+      localStorage.removeItem('voxelo_admin_token')
+      token=null
+      $('#app').classList.remove('active')
+      $('#loginWrap').style.display=''
+    }else{
+      $('#mainContent').innerHTML='<div class="empty-state"><i class="ri-error-warning-line"></i><p>Failed to load content: '+h(e.message)+'</p><button class="btn btn-primary" onclick="location.reload()" style="margin-top:16px"><i class="ri-refresh-line"></i> Retry</button></div>'
+    }
+  })
+}
+
+function renderContent(){
+  var title=navItems.find(function(n){return n.id===activeTab})
+  $('#pageTitle').textContent=title?title.label:''
+  $('#headerBadge').textContent=''
+
+  var mc=$('#mainContent')
+  switch(activeTab){
+    case 'dashboard': renderDashboard(mc);break
+    case 'site': renderSite(mc);break
+    case 'hero': renderHero(mc);break
+    case 'about': renderAbout(mc);break
+    case 'courses': renderCourses(mc);break
+    case 'features': renderFeatures(mc);break
+    case 'testimonials': renderTestimonials(mc);break
+    case 'success-stories': renderSuccessStories(mc);break
+    case 'test-series': renderTestSeries(mc);break
+    case 'study-materials': renderStudyMaterials(mc);break
+    case 'faculty': renderFaculty(mc);break
+    case 'batches': renderBatches(mc);break
+    case 'faq': renderFAQ(mc);break
+    case 'exam-notifications': renderExamNotifications(mc);break
+    case 'posters': renderPosters(mc);break
+    case 'blogs': renderBlogs(mc);break
+    default: mc.innerHTML='<p>Select a section</p>'
+  }
+}
+
+// ==== DASHBOARD ====
+function renderDashboard(el){
+  if(!contentData){el.innerHTML='<p>Loading...</p>';return}
+  var d=contentData
+  var stats=[
+    {label:'Courses',value:(d.courses||[]).length,icon:'ri-book-open-line'},
+    {label:'Success Stories',value:(d.successStories||[]).length,icon:'ri-trophy-line'},
+    {label:'Test Series',value:d.testSeries?1:0,icon:'ri-file-list-3-line'},
+    {label:'Faculty',value:(d.faculty||[]).length,icon:'ri-user-star-line'},
+    {label:'Study Materials',value:d.studyMaterials?1:0,icon:'ri-folder-line'},
+    {label:'FAQ',value:(d.faq||[]).length,icon:'ri-question-answer-line'},
+    {label:'Exam Notifications',value:(d.examNotifications||[]).length,icon:'ri-notification-3-line'},
+    {label:'Testimonials',value:(d.testimonials||[]).length,icon:'ri-chat-quote-line'}
+  ]
+  el.innerHTML='<div class="stats-grid">'+stats.map(function(s){
+    return '<div class="stat-card"><i class="'+s.icon+'"></i><div><div class="stat-value">'+s.value+'</div><div class="stat-label">'+s.label+'</div></div></div>'
+  }).join('')+'</div>'+
+  '<div class="card"><div class="card-header"><h3>Quick Overview</h3></div>'+
+  '<p style="color:var(--text2);font-size:.875rem">Site name: <strong>'+(d.site?h(d.site.name||'N/A'):'N/A')+'</strong> &middot; '+
+  'Courses: <strong>'+(d.courses||[]).length+'</strong> &middot; '+
+  'Faculty: <strong>'+(d.faculty||[]).length+'</strong> &middot; '+
+  'Blogs: <strong>'+(d.blogs||[]).length+'</strong></p></div>'
+}
+
+// ==== SHARED SAVE LOGIC ====
+function saveSection(endpoint,body,el){
+  var btn=el.querySelector('.btn-primary')
+  var orig=btn.innerHTML
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Saving...'
+  api('/api/content/'+endpoint,{method:'PUT',body:body}).then(function(data){
+    contentData[endpoint]=body
+    if(data&&typeof data==='object') contentData[endpoint]=data
+    showAlert(el,'success','Saved successfully')
+  }).catch(function(e){
+    showAlert(el,'error',e.message)
+  }).finally(function(){btn.disabled=false;btn.innerHTML=orig})
+}
+
+// ==== SITE SETTINGS ====
+function renderSite(el){
+  var d=contentData&&contentData.site?contentData.site:{name:'',tagline:'',description:''}
+  el.innerHTML='<div class="card" id="siteForm"><h3 style="margin-bottom:16px">Site Settings</h3>'+
+  '<div class="inline-form">'+
+  '<div class="form-group"><label>Site Name</label><input id="siteName" value="'+h(d.name||'')+'"></div>'+
+  '<div class="form-group"><label>Tagline</label><input id="siteTagline" value="'+h(d.tagline||'')+'"></div>'+
+  '<div class="form-group"><label>Description</label><textarea id="siteDesc">'+h(d.description||'')+'</textarea></div>'+
+  '<div class="form-actions"><button class="btn btn-primary" id="saveSite"><i class="ri-save-line"></i> Save Changes</button></div>'+
+  '</div></div>'
+  $('#saveSite').addEventListener('click',function(){
+    var body={name:$('#siteName').value,tagline:$('#siteTagline').value,description:$('#siteDesc').value}
+    saveSection('site',body,el)
+  })
+}
+
+// ==== HERO ====
+function renderHero(el){
+  var d=contentData&&contentData.hero?contentData.hero:{title:'',subtitle:'',ctaText:'',ctaLink:'',secondaryText:'',secondaryLink:''}
+  el.innerHTML='<div class="card"><h3 style="margin-bottom:16px">Hero Section</h3>'+
+  '<div class="inline-form">'+
+  '<div class="form-row"><div class="form-group"><label>Title</label><input id="hTitle" value="'+h(d.title||'')+'"></div>'+
+  '<div class="form-group"><label>Subtitle</label><input id="hSubtitle" value="'+h(d.subtitle||'')+'"></div></div>'+
+  '<div class="form-row"><div class="form-group"><label>CTA Text</label><input id="hCta" value="'+h(d.ctaText||'')+'"></div>'+
+  '<div class="form-group"><label>CTA Link</label><input id="hCtaLink" value="'+h(d.ctaLink||'')+'"></div></div>'+
+  '<div class="form-row"><div class="form-group"><label>Secondary Text</label><input id="hSec" value="'+h(d.secondaryText||'')+'"></div>'+
+  '<div class="form-group"><label>Secondary Link</label><input id="hSecLink" value="'+h(d.secondaryLink||'')+'"></div></div>'+
+  '<div class="form-actions"><button class="btn btn-primary" id="saveHero"><i class="ri-save-line"></i> Save Hero</button></div>'+
+  '</div></div>'
+  $('#saveHero').addEventListener('click',function(){
+    var body={title:$('#hTitle').value,subtitle:$('#hSubtitle').value,ctaText:$('#hCta').value,ctaLink:$('#hCtaLink').value,secondaryText:$('#hSec').value,secondaryLink:$('#hSecLink').value}
+    saveSection('hero',body,el)
+  })
+}
+
+// ==== ABOUT ====
+function renderAbout(el){
+  var d=contentData&&contentData.about?contentData.about:{title:'',description:'',stats:[]}
+  var stats=d.stats||[]
+  while(stats.length<4) stats.push({value:'',label:''})
+  el.innerHTML='<div class="card"><h3 style="margin-bottom:16px">About Section</h3>'+
+  '<div class="inline-form">'+
+  '<div class="form-group"><label>Title</label><input id="aTitle" value="'+h(d.title||'')+'"></div>'+
+  '<div class="form-group"><label>Description</label><textarea id="aDesc">'+h(d.description||'')+'</textarea></div>'+
+  '<p style="font-weight:600;margin-bottom:8px;color:var(--text2);font-size:.8125rem">Stats (4 items)</p>'+
+  stats.map(function(s,i){return '<div class="form-row"><div class="form-group"><label>Stat '+(i+1)+' Value</label><input class="aStatVal" data-i="'+i+'" value="'+h(s.value||'')+'"></div><div class="form-group"><label>Stat '+(i+1)+' Label</label><input class="aStatLbl" data-i="'+i+'" value="'+h(s.label||'')+'"></div></div>'}).join('')+
+  '<div class="form-actions"><button class="btn btn-primary" id="saveAbout"><i class="ri-save-line"></i> Save About</button></div>'+
+  '</div></div>'
+  $('#saveAbout').addEventListener('click',function(){
+    var sv=[],sl=[]
+    $$('.aStatVal').forEach(function(inp){sv.push(inp.value)})
+    $$('.aStatLbl').forEach(function(inp){sl.push(inp.value)})
+    var body={title:$('#aTitle').value,description:$('#aDesc').value,stats:sv.map(function(v,i){return{value:v,label:sl[i]||''}})}
+    saveSection('about',body,el)
+  })
+}
+
+// ==== COURSES ====
+function renderCourses(el){
+  var courses=contentData?contentData.courses||[]:[]
+  var rows=courses.map(function(c){
+    return '<tr><td>'+h(c.title||'')+'</td><td>'+h(c.category||'')+'</td><td>'+h(c.duration||'')+'</td><td>'+h(c.fee||'')+'</td><td>'+(c.featured?'<span class="tag tag-primary">Featured</span>':'')+'</td>'+
+    '<td><div class="actions"><button class="btn btn-outline btn-sm edit-course" data-id="'+c.id+'"><i class="ri-edit-line"></i></button>'+
+    '<button class="btn btn-danger btn-sm del-course" data-id="'+c.id+'"><i class="ri-delete-bin-line"></i></button></div></td></tr>'
+  }).join('')
+  el.innerHTML='<div class="card"><div class="card-header"><h3>Courses ('+courses.length+')</h3>'+
+  '<button class="btn btn-primary btn-sm" id="addCourseBtn"><i class="ri-add-line"></i> Add Course</button></div>'+
+  '<div class="table-wrap"><table><thead><tr><th>Title</th><th>Category</th><th>Duration</th><th>Fee</th><th>Featured</th><th>Actions</th></tr></thead><tbody>'+(rows||'<tr><td colspan="6" style="text-align:center;color:var(--text2)">No courses yet</td></tr>')+'</tbody></table></div></div>'
+
+  $('#addCourseBtn').addEventListener('click',function(){openCourseModal()})
+  $$('.edit-course').forEach(function(btn){
+    btn.addEventListener('click',function(){var c=courses.find(function(x){return x.id==this.dataset.id});if(c) openCourseModal(c)}.bind(btn))
+  })
+  $$('.del-course').forEach(function(btn){
+    btn.addEventListener('click',function(){delItem('courses',this.dataset.id,el)}.bind(btn))
+  })
+}
+
+function openCourseModal(course){
+  var c=course||{title:'',category:'',description:'',duration:'',fee:'',featured:false,highlights:['']}
+  var hls=(c.highlights||['']).map(function(h,i){return '<div class="form-row" style="margin-bottom:8px"><input class="hlInput" value="'+h(h||'')+'" style="flex:1"><button class="btn btn-outline btn-sm rm-hl" type="button" style="flex-shrink:0"><i class="ri-close-line"></i></button></div>'}).join('')
+  toggleModal('<h3>'+(course?'Edit Course':'New Course')+'</h3>'+
+  '<div class="form-group"><label>Title</label><input id="mcTitle" value="'+h(c.title||'')+'"></div>'+
+  '<div class="form-row"><div class="form-group"><label>Category</label><input id="mcCat" value="'+h(c.category||'')+'"></div>'+
+  '<div class="form-group"><label>Duration</label><input id="mcDur" value="'+h(c.duration||'')+'"></div></div>'+
+  '<div class="form-row"><div class="form-group"><label>Fee</label><input id="mcFee" value="'+h(c.fee||'')+'"></div>'+
+  '<div class="form-group" style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="mcFeat" '+(c.featured?'checked':'')+'><label for="mcFeat" style="margin:0">Featured</label></div></div>'+
+  '<div class="form-group"><label>Description</label><textarea id="mcDesc">'+h(c.description||'')+'</textarea></div>'+
+  '<div class="form-group"><label>Highlights</label><div id="hlWrap">'+hls+'</div><button class="btn btn-outline btn-sm" id="addHl" type="button" style="margin-top:8px"><i class="ri-add-line"></i> Add Highlight</button></div>'+
+  '<div class="form-actions"><button class="btn btn-outline" onclick="document.getElementById(\'modalOverlay\').classList.remove(\'active\')">Cancel</button>'+
+  '<button class="btn btn-primary" id="saveModalBtn"><i class="ri-save-line"></i> '+(course?'Update':'Create')+' Course</button></div>')
+
+  $('#addHl').addEventListener('click',function(){var d=document.createElement('div');d.className='form-row';d.style.marginBottom='8px';d.innerHTML='<input class="hlInput" style="flex:1"><button class="btn btn-outline btn-sm rm-hl" type="button" style="flex-shrink:0"><i class="ri-close-line"></i></button>';$('#hlWrap').appendChild(d);d.querySelector('.rm-hl').addEventListener('click',function(){d.remove()})})
+  $$('.rm-hl').forEach(function(b){b.addEventListener('click',function(){b.parentElement.remove()})})
+  $('#saveModalBtn').addEventListener('click',function(){
+    var hls=[];$$('.hlInput').forEach(function(i){if(i.value.trim()) hls.push(i.value.trim())})
+    var body={title:$('#mcTitle').value,category:$('#mcCat').value,description:$('#mcDesc').value,duration:$('#mcDur').value,fee:$('#mcFee').value,featured:$('#mcFeat').checked,highlights:hls}
+    var btn=$('#saveModalBtn')
+    btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Saving...'
+    var method=course?'PUT':'POST'
+    var url=course?'/api/content/courses/'+course.id:'/api/content/courses'
+    api(url,{method:method,body:body}).then(function(data){
+      if(course&&data){var idx=contentData.courses.findIndex(function(x){return x.id==course.id});if(idx!==-1) contentData.courses[idx]=data}
+      else contentData.courses.push(data||body)
+      toggleModal(null);renderContent()
+    }).catch(function(e){showAlert($('#modalBox'),'error',e.message)}).finally(function(){btn.disabled=false;btn.innerHTML='<i class="ri-save-line"></i> '+(course?'Update':'Create')+' Course'})
+  })
+}
+
+// ==== FEATURES ====
+function renderFeatures(el){
+  var feats=contentData?contentData.features||[]:[]
+  while(feats.length<6) feats.push({id:feats.length+1,icon:'',title:'',description:''})
+  el.innerHTML='<div class="card"><div class="card-header"><h3>Features (6)</h3></div>'+
+  '<div id="featuresForm">'+feats.map(function(f,i){
+    return '<div class="item-row"><div class="item-info">'+
+    '<div class="form-row"><div class="form-group"><label>Icon</label><input class="fIcon" value="'+h(f.icon||'')+'" placeholder="e.g. ri-book-open-line"></div>'+
+    '<div class="form-group"><label>Title</label><input class="fTitle" value="'+h(f.title||'')+'"></div></div>'+
+    '<div class="form-group"><label>Description</label><textarea class="fDesc">'+h(f.description||'')+'</textarea></div>'+
+    '</div></div>'
+  }).join('')+
+  '<div class="form-actions"><button class="btn btn-primary" id="saveFeats"><i class="ri-save-line"></i> Save Features</button></div>'+
+  '</div></div>'
+  $('#saveFeats').addEventListener('click',function(){
+    var icons=[],titles=[],descs=[]
+    $$('.fIcon').forEach(function(i){icons.push(i.value)})
+    $$('.fTitle').forEach(function(i){titles.push(i.value)})
+    $$('.fDesc').forEach(function(i){descs.push(i.value)})
+    var body=icons.map(function(ic,i){return{id:i+1,icon:ic,title:titles[i]||'',description:descs[i]||''}})
+    saveSection('features',body,el)
+  })
+}
+
+// ==== TESTIMONIALS ====
+function renderTestimonials(el){
+  var items=contentData?contentData.testimonials||[]:[]
+  el.innerHTML='<div class="card"><div class="card-header"><h3>Testimonials ('+items.length+')</h3>'+
+  '<button class="btn btn-primary btn-sm" id="addTestimonialBtn"><i class="ri-add-line"></i> Add</button></div>'+
+  '<div class="items-list">'+items.map(function(t){
+    return '<div class="item-row"><div class="item-info"><h4>'+h(t.name||'')+' <span class="tag">'+h(t.exam||'')+'</span></h4><p>'+h(t.text||'')+'</p></div>'+
+    '<div class="item-actions"><button class="btn btn-danger btn-sm del-testimonial" data-id="'+t.id+'"><i class="ri-delete-bin-line"></i></button></div></div>'
+  }).join('')+'</div>'+
+  (items.length===0?'<div class="empty-state"><i class="ri-chat-quote-line"></i><p>No testimonials yet</p></div>':'')+'</div>'
+
+  $('#addTestimonialBtn').addEventListener('click',function(){openTestimonialModal()})
+  $$('.del-testimonial').forEach(function(b){
+    b.addEventListener('click',function(){delItem('testimonials',this.dataset.id,el)}.bind(b))
+  })
+}
+
+function openTestimonialModal(){
+  toggleModal('<h3>New Testimonial</h3>'+
+  '<div class="form-group"><label>Name</label><input id="tmName"></div>'+
+  '<div class="form-group"><label>Exam</label><input id="tmExam"></div>'+
+  '<div class="form-group"><label>Text</label><textarea id="tmText"></textarea></div>'+
+  '<div class="form-actions"><button class="btn btn-outline" onclick="document.getElementById(\'modalOverlay\').classList.remove(\'active\')">Cancel</button>'+
+  '<button class="btn btn-primary" id="saveTm"><i class="ri-save-line"></i> Add Testimonial</button></div>')
+  $('#saveTm').addEventListener('click',function(){
+    var body={name:$('#tmName').value,exam:$('#tmExam').value,text:$('#tmText').value}
+    api('/api/content/testimonials',{method:'POST',body:body}).then(function(data){
+      contentData.testimonials.push(data||body);toggleModal(null);renderContent()
+    }).catch(function(e){showAlert($('#modalBox'),'error',e.message)})
+  })
+}
+
+// ==== SUCCESS STORIES ====
+function renderSuccessStories(el){
+  var items=contentData?contentData.successStories||[]:[]
+  el.innerHTML='<div class="card"><div class="card-header"><h3>Success Stories ('+items.length+')</h3>'+
+  '<button class="btn btn-primary btn-sm" id="addSSBtn"><i class="ri-add-line"></i> Add</button></div>'+
+  '<div class="table-wrap"><table><thead><tr><th>Name</th><th>Exam</th><th>Rank</th><th>State</th><th>Actions</th></tr></thead><tbody>'+items.map(function(s){
+    return '<tr><td>'+h(s.name||'')+'</td><td>'+h(s.exam||'')+'</td><td>'+h(s.rank||'')+'</td><td>'+h(s.state||'')+'</td>'+
+    '<td><button class="btn btn-danger btn-sm del-ss" data-id="'+s.id+'"><i class="ri-delete-bin-line"></i></button></td></tr>'
+  }).join('')+'</tbody></table></div>'+
+  (items.length===0?'<div class="empty-state"><i class="ri-trophy-line"></i><p>No success stories yet</p></div>':'')+'</div>'
+
+  $('#addSSBtn').addEventListener('click',function(){openSSModal()})
+  $$('.del-ss').forEach(function(b){b.addEventListener('click',function(){delItem('success-stories',this.dataset.id,el)}.bind(b))})
+}
+
+function openSSModal(){
+  toggleModal('<h3>New Success Story</h3>'+
+  '<div class="form-row"><div class="form-group"><label>Name</label><input id="ssName"></div><div class="form-group"><label>Exam</label><input id="ssExam"></div></div>'+
+  '<div class="form-row"><div class="form-group"><label>Rank</label><input id="ssRank"></div><div class="form-group"><label>State</label><input id="ssState"></div></div>'+
+  '<div class="form-group"><label>Story</label><textarea id="ssStory"></textarea></div>'+
+  '<div class="form-actions"><button class="btn btn-outline" onclick="document.getElementById(\'modalOverlay\').classList.remove(\'active\')">Cancel</button>'+
+  '<button class="btn btn-primary" id="saveSS"><i class="ri-save-line"></i> Add Story</button></div>')
+  $('#saveSS').addEventListener('click',function(){
+    var body={name:$('#ssName').value,exam:$('#ssExam').value,rank:$('#ssRank').value,state:$('#ssState').value,story:$('#ssStory').value}
+    api('/api/content/success-stories',{method:'POST',body:body}).then(function(data){
+      contentData.successStories.push(data||body);toggleModal(null);renderContent()
+    }).catch(function(e){showAlert($('#modalBox'),'error',e.message)})
+  })
+}
+
+// ==== TEST SERIES ====
+function renderTestSeries(el){
+  var d=contentData&&contentData.testSeries?contentData.testSeries:{title:'',description:'',pricing:{monthly:'',quarterly:'',yearly:''},features:[],dailyTests:[],weeklyTests:[]}
+  el.innerHTML='<div class="card"><h3 style="margin-bottom:16px">Test Series</h3>'+
+  '<div class="inline-form">'+
+  '<div class="form-group"><label>Title</label><input id="tsTitle" value="'+h(d.title||'')+'"></div>'+
+  '<div class="form-group"><label>Description</label><textarea id="tsDesc">'+h(d.description||'')+'</textarea></div>'+
+  '<p style="font-weight:600;margin-bottom:8px;color:var(--text2);font-size:.8125rem">Pricing</p>'+
+  '<div class="form-row"><div class="form-group"><label>Monthly</label><input id="tsPM" value="'+h((d.pricing||{}).monthly||'')+'"></div>'+
+  '<div class="form-group"><label>Quarterly</label><input id="tsPQ" value="'+h((d.pricing||{}).quarterly||'')+'"></div>'+
+  '<div class="form-group"><label>Yearly</label><input id="tsPY" value="'+h((d.pricing||{}).yearly||'')+'"></div></div>'+
+  '<div class="form-group"><label>Features (one per line)</label><textarea id="tsFeatures">'+h((d.features||[]).join('\n'))+'</textarea></div>'+
+  '<div class="form-group"><label>Daily Tests (JSON array)</label><textarea id="tsDaily">'+h(JSON.stringify(d.dailyTests||[],null,2))+'</textarea></div>'+
+  '<div class="form-group"><label>Weekly Tests (JSON array)</label><textarea id="tsWeekly">'+h(JSON.stringify(d.weeklyTests||[],null,2))+'</textarea></div>'+
+  '<div class="form-actions"><button class="btn btn-primary" id="saveTS"><i class="ri-save-line"></i> Save Test Series</button></div>'+
+  '</div></div>'
+  $('#saveTS').addEventListener('click',function(){
+    var dt=[],wt=[]
+    try{dt=JSON.parse($('#tsDaily').value)}catch(e){return showAlert(el,'error','Invalid Daily Tests JSON')}
+    try{wt=JSON.parse($('#tsWeekly').value)}catch(e){return showAlert(el,'error','Invalid Weekly Tests JSON')}
+    var body={title:$('#tsTitle').value,description:$('#tsDesc').value,pricing:{monthly:$('#tsPM').value,quarterly:$('#tsPQ').value,yearly:$('#tsPY').value},features:$('#tsFeatures').value.split('\n').filter(function(l){return l.trim()}),dailyTests:dt,weeklyTests:wt}
+    saveSection('test-series',body,el)
+  })
+}
+
+// ==== STUDY MATERIALS ====
+function renderStudyMaterials(el){
+  var d=contentData&&contentData.studyMaterials?contentData.studyMaterials:{title:'',description:'',resources:[]}
+  var res=d.resources||[]
+  el.innerHTML='<div class="card"><h3 style="margin-bottom:16px">Study Materials</h3>'+
+  '<div class="inline-form">'+
+  '<div class="form-group"><label>Title</label><input id="smTitle" value="'+h(d.title||'')+'"></div>'+
+  '<div class="form-group"><label>Description</label><textarea id="smDesc">'+h(d.description||'')+'</textarea></div>'+
+  '<div class="form-group"><label>Resources</label><div id="smRes">'+res.map(function(r,i){
+    return '<div class="form-row" style="margin-bottom:8px"><input class="smRTitle" placeholder="Title" value="'+h(r.title||'')+'" style="flex:1"><input class="smRIcon" placeholder="Icon" value="'+h(r.icon||'')+'" style="flex:1"><input class="smRDesc" placeholder="Description" value="'+h(r.description||'')+'" style="flex:2"><button class="btn btn-outline btn-sm rm-smr" type="button" style="flex-shrink:0"><i class="ri-close-line"></i></button></div>'
+  }).join('')+'</div><button class="btn btn-outline btn-sm" id="addRes" type="button" style="margin-top:8px"><i class="ri-add-line"></i> Add Resource</button></div>'+
+  '<div class="form-actions"><button class="btn btn-primary" id="saveSM"><i class="ri-save-line"></i> Save Study Materials</button></div>'+
+  '</div></div>'
+
+  function bindRm(){$$('.rm-smr').forEach(function(b){b.addEventListener('click',function(){b.parentElement.remove()})})}
+  bindRm()
+  $('#addRes').addEventListener('click',function(){
+    var d=document.createElement('div');d.className='form-row';d.style.marginBottom='8px';d.innerHTML='<input class="smRTitle" placeholder="Title" style="flex:1"><input class="smRIcon" placeholder="Icon" style="flex:1"><input class="smRDesc" placeholder="Description" style="flex:2"><button class="btn btn-outline btn-sm rm-smr" type="button" style="flex-shrink:0"><i class="ri-close-line"></i></button>'
+    $('#smRes').appendChild(d);d.querySelector('.rm-smr').addEventListener('click',function(){d.remove()})
+  })
+  $('#saveSM').addEventListener('click',function(){
+    var resources=[]
+    var rows=$('#smRes').children
+    for(var i=0;i<rows.length;i++){
+      var r=rows[i]
+      resources.push({title:r.querySelector('.smRTitle').value,icon:r.querySelector('.smRIcon').value,description:r.querySelector('.smRDesc').value})
+    }
+    var body={title:$('#smTitle').value,description:$('#smDesc').value,resources:resources}
+    saveSection('study-materials',body,el)
+  })
+}
+
+// ==== FACULTY ====
+function renderFaculty(el){
+  var items=contentData?contentData.faculty||[]:[]
+  el.innerHTML='<div class="card"><div class="card-header"><h3>Faculty ('+items.length+')</h3>'+
+  '<button class="btn btn-primary btn-sm" id="addFacultyBtn"><i class="ri-add-line"></i> Add Faculty</button></div>'+
+  '<div class="table-wrap"><table><thead><tr><th>Name</th><th>Subject</th><th>Experience</th><th>Qualification</th><th>Actions</th></tr></thead><tbody>'+items.map(function(f){
+    return '<tr><td>'+h(f.name||'')+'</td><td>'+h(f.subject||'')+'</td><td>'+h(f.experience||'')+'</td><td>'+h(f.qualification||'')+'</td>'+
+    '<td><div class="actions"><button class="btn btn-outline btn-sm edit-faculty" data-id="'+f.id+'"><i class="ri-edit-line"></i></button>'+
+    '<button class="btn btn-danger btn-sm del-faculty" data-id="'+f.id+'"><i class="ri-delete-bin-line"></i></button></div></td></tr>'
+  }).join('')+'</tbody></table></div>'+
+  (items.length===0?'<div class="empty-state"><i class="ri-user-star-line"></i><p>No faculty yet</p></div>':'')+'</div>'
+
+  $('#addFacultyBtn').addEventListener('click',function(){openFacultyModal()})
+  $$('.edit-faculty').forEach(function(b){
+    b.addEventListener('click',function(){var f=items.find(function(x){return x.id==this.dataset.id});if(f) openFacultyModal(f)}.bind(b))
+  })
+  $$('.del-faculty').forEach(function(b){b.addEventListener('click',function(){delItem('faculty',this.dataset.id,el)}.bind(b))})
+}
+
+function openFacultyModal(f){
+  var d=f||{name:'',subject:'',experience:'',qualification:'',bio:''}
+  toggleModal('<h3>'+(f?'Edit Faculty':'New Faculty')+'</h3>'+
+  '<div class="form-row"><div class="form-group"><label>Name</label><input id="fcName" value="'+h(d.name||'')+'"></div><div class="form-group"><label>Subject</label><input id="fcSub" value="'+h(d.subject||'')+'"></div></div>'+
+  '<div class="form-row"><div class="form-group"><label>Experience</label><input id="fcExp" value="'+h(d.experience||'')+'"></div><div class="form-group"><label>Qualification</label><input id="fcQual" value="'+h(d.qualification||'')+'"></div></div>'+
+  '<div class="form-group"><label>Bio</label><textarea id="fcBio">'+h(d.bio||'')+'</textarea></div>'+
+  '<div class="form-actions"><button class="btn btn-outline" onclick="document.getElementById(\'modalOverlay\').classList.remove(\'active\')">Cancel</button>'+
+  '<button class="btn btn-primary" id="saveFc"><i class="ri-save-line"></i> '+(f?'Update':'Create')+' Faculty</button></div>')
+  $('#saveFc').addEventListener('click',function(){
+    var body={name:$('#fcName').value,subject:$('#fcSub').value,experience:$('#fcExp').value,qualification:$('#fcQual').value,bio:$('#fcBio').value}
+    var method=f?'PUT':'POST'
+    var url=f?'/api/content/faculty/'+f.id:'/api/content/faculty'
+    api(url,{method:method,body:body}).then(function(data){
+      if(f){var idx=contentData.faculty.findIndex(function(x){return x.id==f.id});if(idx!==-1) contentData.faculty[idx]=data||Object.assign({},f,body)}
+      else contentData.faculty.push(data||body)
+      toggleModal(null);renderContent()
+    }).catch(function(e){showAlert($('#modalBox'),'error',e.message)})
+  })
+}
+
+// ==== BATCHES ====
+function renderBatches(el){
+  var d=contentData&&contentData.batches?contentData.batches:[]
+  while(d.length<1) d.push({name:'',time:'',days:'',mode:'',subjects:'',seats:''})
+  el.innerHTML='<div class="card"><div class="card-header"><h3>Batches</h3></div><div id="batchesForm">'+
+  d.map(function(b,i){
+    return '<div class="item-row"><div class="item-info">'+
+    '<div class="form-row"><div class="form-group"><label>Name</label><input class="bName" value="'+h(b.name||'')+'"></div>'+
+    '<div class="form-group"><label>Time</label><input class="bTime" value="'+h(b.time||'')+'"></div></div>'+
+    '<div class="form-row"><div class="form-group"><label>Days</label><input class="bDays" value="'+h(b.days||'')+'"></div>'+
+    '<div class="form-group"><label>Mode</label><input class="bMode" value="'+h(b.mode||'')+'"></div></div>'+
+    '<div class="form-row"><div class="form-group"><label>Subjects</label><input class="bSub" value="'+h(b.subjects||'')+'"></div>'+
+    '<div class="form-group"><label>Seats</label><input class="bSeats" value="'+h(b.seats||'')+'"></div></div>'+
+    '</div><button class="btn btn-danger btn-sm rm-batch" type="button" style="flex-shrink:0;margin-top:8px"><i class="ri-close-line"></i></button></div>'
+  }).join('')+
+  '<button class="btn btn-outline btn-sm" id="addBatch" type="button" style="margin-top:8px"><i class="ri-add-line"></i> Add Batch</button>'+
+  '<div class="form-actions" style="margin-top:16px"><button class="btn btn-primary" id="saveBatches"><i class="ri-save-line"></i> Save Batches</button></div>'+
+  '</div></div>'
+
+  function bindRmB(){$$('.rm-batch').forEach(function(b){b.addEventListener('click',function(){b.parentElement.remove()})})}
+  bindRmB()
+  $('#addBatch').addEventListener('click',function(){
+    var d=document.createElement('div');d.className='item-row';d.innerHTML='<div class="item-info">'+
+    '<div class="form-row"><div class="form-group"><label>Name</label><input class="bName"></div><div class="form-group"><label>Time</label><input class="bTime"></div></div>'+
+    '<div class="form-row"><div class="form-group"><label>Days</label><input class="bDays"></div><div class="form-group"><label>Mode</label><input class="bMode"></div></div>'+
+    '<div class="form-row"><div class="form-group"><label>Subjects</label><input class="bSub"></div><div class="form-group"><label>Seats</label><input class="bSeats"></div></div>'+
+    '</div><button class="btn btn-danger btn-sm rm-batch" type="button" style="flex-shrink:0;margin-top:8px"><i class="ri-close-line"></i></button>'
+    $('#batchesForm').insertBefore(d,$('#batchesForm').querySelector('.form-actions'))
+    d.querySelector('.rm-batch').addEventListener('click',function(){d.remove()})
+  })
+  $('#saveBatches').addEventListener('click',function(){
+    var all=$('#batchesForm').querySelectorAll('.item-row')
+    var batches=[]
+    all.forEach(function(row){
+      batches.push({name:row.querySelector('.bName').value,time:row.querySelector('.bTime').value,days:row.querySelector('.bDays').value,mode:row.querySelector('.bMode').value,subjects:row.querySelector('.bSub').value,seats:row.querySelector('.bSeats').value})
+    })
+    saveSection('batches',batches,el)
+  })
+}
+
+// ==== FAQ ====
+function renderFAQ(el){
+  var items=contentData?contentData.faq||[]:[]
+  while(items.length<1) items.push({question:'',answer:''})
+  el.innerHTML='<div class="card"><div class="card-header"><h3>FAQ</h3></div><div id="faqForm">'+
+  items.map(function(f,i){
+    return '<div class="item-row"><div class="item-info">'+
+    '<div class="form-group"><label>Question</label><input class="fqQ" value="'+h(f.question||'')+'"></div>'+
+    '<div class="form-group"><label>Answer</label><textarea class="fqA">'+h(f.answer||'')+'</textarea></div>'+
+    '</div><button class="btn btn-danger btn-sm rm-faq" type="button" style="flex-shrink:0;margin-top:8px"><i class="ri-close-line"></i></button></div>'
+  }).join('')+
+  '<button class="btn btn-outline btn-sm" id="addFaq" type="button" style="margin-top:8px"><i class="ri-add-line"></i> Add FAQ</button>'+
+  '<div class="form-actions" style="margin-top:16px"><button class="btn btn-primary" id="saveFaq"><i class="ri-save-line"></i> Save FAQ</button></div>'+
+  '</div></div>'
+
+  function bindRmF(){$$('.rm-faq').forEach(function(b){b.addEventListener('click',function(){b.parentElement.remove()})})}
+  bindRmF()
+  $('#addFaq').addEventListener('click',function(){
+    var d=document.createElement('div');d.className='item-row';d.innerHTML='<div class="item-info"><div class="form-group"><label>Question</label><input class="fqQ"></div><div class="form-group"><label>Answer</label><textarea class="fqA"></textarea></div></div><button class="btn btn-danger btn-sm rm-faq" type="button" style="flex-shrink:0;margin-top:8px"><i class="ri-close-line"></i></button>'
+    $('#faqForm').insertBefore(d,$('#faqForm').querySelector('.form-actions'))
+    d.querySelector('.rm-faq').addEventListener('click',function(){d.remove()})
+  })
+  $('#saveFaq').addEventListener('click',function(){
+    var all=$('#faqForm').querySelectorAll('.item-row')
+    var faq=[]
+    all.forEach(function(row){faq.push({question:row.querySelector('.fqQ').value,answer:row.querySelector('.fqA').value})})
+    saveSection('faq',faq,el)
+  })
+}
+
+// ==== EXAM NOTIFICATIONS ====
+function renderExamNotifications(el){
+  var items=contentData?contentData.examNotifications||[]:[]
+  el.innerHTML='<div class="card"><div class="card-header"><h3>Exam Notifications ('+items.length+')</h3>'+
+  '<button class="btn btn-primary btn-sm" id="addENBtn"><i class="ri-add-line"></i> Add</button></div>'+
+  '<div class="items-list">'+items.map(function(n){
+    return '<div class="item-row"><div class="item-info"><h4>'+h(n.title||'')+' <span class="tag">'+h(n.exam||'')+'</span></h4><p>'+h(n.summary||'')+' <span class="tag">'+h(formatDate(n.date))+'</span></p></div>'+
+    '<div class="item-actions"><button class="btn btn-danger btn-sm del-en" data-id="'+n.id+'"><i class="ri-delete-bin-line"></i></button></div></div>'
+  }).join('')+'</div>'+
+  (items.length===0?'<div class="empty-state"><i class="ri-notification-3-line"></i><p>No notifications yet</p></div>':'')+'</div>'
+
+  $('#addENBtn').addEventListener('click',function(){openENModal()})
+  $$('.del-en').forEach(function(b){b.addEventListener('click',function(){delItem('exam-notifications',this.dataset.id,el)}.bind(b))})
+}
+
+function openENModal(){
+  toggleModal('<h3>New Exam Notification</h3>'+
+  '<div class="form-group"><label>Title</label><input id="enTitle"></div>'+
+  '<div class="form-row"><div class="form-group"><label>Exam</label><input id="enExam"></div><div class="form-group"><label>Date</label><input type="date" id="enDate"></div></div>'+
+  '<div class="form-group"><label>Summary</label><textarea id="enSummary"></textarea></div>'+
+  '<div class="form-actions"><button class="btn btn-outline" onclick="document.getElementById(\'modalOverlay\').classList.remove(\'active\')">Cancel</button>'+
+  '<button class="btn btn-primary" id="saveEN"><i class="ri-save-line"></i> Add Notification</button></div>')
+  $('#saveEN').addEventListener('click',function(){
+    var body={title:$('#enTitle').value,exam:$('#enExam').value,date:$('#enDate').value,summary:$('#enSummary').value}
+    api('/api/content/exam-notifications',{method:'POST',body:body}).then(function(data){
+      contentData.examNotifications.push(data||body);toggleModal(null);renderContent()
+    }).catch(function(e){showAlert($('#modalBox'),'error',e.message)})
+  })
+}
+
+// ==== POSTERS ====
+function renderPosters(el){
+  var items=contentData?contentData.posters||[]:[]
+  el.innerHTML='<div class="card"><div class="card-header"><h3>Posters ('+items.length+')</h3>'+
+  '<button class="btn btn-primary btn-sm" id="addPosterBtn"><i class="ri-add-line"></i> Add Poster</button></div>'+
+  '<div class="items-list">'+items.map(function(p){
+    return '<div class="item-row"><div class="item-info"><h4>'+h(p.title||'')+'</h4><a href="'+h(p.url||'#')+'" target="_blank" style="font-size:.8125rem">'+h(p.url||'')+'</a></div>'+
+    '<div class="item-actions"><button class="btn btn-danger btn-sm del-poster" data-id="'+p.id+'"><i class="ri-delete-bin-line"></i></button></div></div>'
+  }).join('')+'</div>'+
+  (items.length===0?'<div class="empty-state"><i class="ri-gallery-line"></i><p>No posters yet</p></div>':'')+'</div>'
+
+  $('#addPosterBtn').addEventListener('click',function(){openPosterModal()})
+  $$('.del-poster').forEach(function(b){b.addEventListener('click',function(){delItem('posters',this.dataset.id,el)}.bind(b))})
+}
+
+function openPosterModal(){
+  toggleModal('<h3>Add Poster</h3>'+
+  '<div class="form-group"><label>Title</label><input id="poTitle"></div>'+
+  '<div class="form-group"><label>Image URL</label><input id="poUrl" type="url" placeholder="https://..."></div>'+
+  '<div class="form-actions"><button class="btn btn-outline" onclick="document.getElementById(\'modalOverlay\').classList.remove(\'active\')">Cancel</button>'+
+  '<button class="btn btn-primary" id="savePo"><i class="ri-save-line"></i> Add Poster</button></div>')
+  $('#savePo').addEventListener('click',function(){
+    var body={title:$('#poTitle').value,url:$('#poUrl').value}
+    api('/api/content/posters',{method:'POST',body:body}).then(function(data){
+      contentData.posters.push(data||body);toggleModal(null);renderContent()
+    }).catch(function(e){showAlert($('#modalBox'),'error',e.message)})
+  })
+}
+
+// ==== BLOGS ====
+function renderBlogs(el){
+  var items=contentData?contentData.blogs||[]:[]
+  el.innerHTML='<div class="card"><div class="card-header"><h3>Blogs ('+items.length+')</h3>'+
+  '<button class="btn btn-primary btn-sm" id="addBlogBtn"><i class="ri-add-line"></i> Add Blog</button></div>'+
+  '<div class="table-wrap"><table><thead><tr><th>Title</th><th>Date</th><th>Excerpt</th><th>Actions</th></tr></thead><tbody>'+items.map(function(b){
+    return '<tr><td>'+h(b.title||'')+'</td><td>'+h(formatDate(b.date))+'</td><td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+h(b.excerpt||'')+'</td>'+
+    '<td><div class="actions"><button class="btn btn-outline btn-sm edit-blog" data-id="'+b.id+'"><i class="ri-edit-line"></i></button>'+
+    '<button class="btn btn-danger btn-sm del-blog" data-id="'+b.id+'"><i class="ri-delete-bin-line"></i></button></div></td></tr>'
+  }).join('')+'</tbody></table></div>'+
+  (items.length===0?'<div class="empty-state"><i class="ri-article-line"></i><p>No blogs yet</p></div>':'')+'</div>'
+
+  $('#addBlogBtn').addEventListener('click',function(){openBlogModal()})
+  $$('.edit-blog').forEach(function(b){
+    b.addEventListener('click',function(){var blog=items.find(function(x){return x.id==this.dataset.id});if(blog) openBlogModal(blog)}.bind(b))
+  })
+  $$('.del-blog').forEach(function(b){b.addEventListener('click',function(){delItem('blogs',this.dataset.id,el)}.bind(b))})
+}
+
+function openBlogModal(blog){
+  var b=blog||{title:'',date:'',excerpt:'',content:'',image:''}
+  toggleModal('<h3>'+(blog?'Edit Blog':'New Blog')+'</h3>'+
+  '<div class="form-group"><label>Title</label><input id="blTitle" value="'+h(b.title||'')+'"></div>'+
+  '<div class="form-row"><div class="form-group"><label>Date</label><input type="date" id="blDate" value="'+h((b.date||'').substring(0,10))+'"></div>'+
+  '<div class="form-group"><label>Image URL</label><input id="blImage" value="'+h(b.image||'')+'"></div></div>'+
+  '<div class="form-group"><label>Excerpt</label><textarea id="blExcerpt">'+h(b.excerpt||'')+'</textarea></div>'+
+  '<div class="form-group"><label>Content</label><textarea id="blContent" style="min-height:160px">'+h(b.content||'')+'</textarea></div>'+
+  '<div class="form-actions"><button class="btn btn-outline" onclick="document.getElementById(\'modalOverlay\').classList.remove(\'active\')">Cancel</button>'+
+  '<button class="btn btn-primary" id="saveBl"><i class="ri-save-line"></i> '+(blog?'Update':'Create')+' Blog</button></div>')
+  $('#saveBl').addEventListener('click',function(){
+    var body={title:$('#blTitle').value,date:$('#blDate').value,excerpt:$('#blExcerpt').value,content:$('#blContent').value,image:$('#blImage').value}
+    var method=blog?'PUT':'POST'
+    var url=blog?'/api/content/blogs/'+blog.id:'/api/content/blogs'
+    api(url,{method:method,body:body}).then(function(data){
+      if(blog){var idx=contentData.blogs.findIndex(function(x){return x.id==blog.id});if(idx!==-1) contentData.blogs[idx]=data||Object.assign({},blog,body)}
+      else contentData.blogs.push(data||body)
+      toggleModal(null);renderContent()
+    }).catch(function(e){showAlert($('#modalBox'),'error',e.message)})
+  })
+}
+
+// ==== DELETE HELPER ====
+function delItem(endpoint,id,el){
+  if(!confirm('Are you sure you want to delete this item?')) return
+  api('/api/content/'+endpoint+'/'+id,{method:'DELETE'}).then(function(){
+    var key=endpoint==='success-stories'?'successStories':endpoint==='exam-notifications'?'examNotifications':endpoint==='study-materials'?'studyMaterials':endpoint==='test-series'?'testSeries':endpoint
+    if(contentData[key]&&Array.isArray(contentData[key])) contentData[key]=contentData[key].filter(function(x){return x.id!=id})
+    renderContent()
+  }).catch(function(e){showAlert(el,'error',e.message)})
+}
+
+// ==== BOOT ====
+if(token){
+  $('#loginWrap').style.display='none'
+  $('#app').classList.add('active')
+  initApp()
+}
+
+})()
+</script>
+</body>
+</html>
