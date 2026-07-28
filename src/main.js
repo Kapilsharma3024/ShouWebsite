@@ -134,9 +134,12 @@ function populateSuccessStories(data) {
   if (stories.length === 0) return
   grid.innerHTML = stories.map(s => {
     const initials = s.name.split(' ').map(w => w[0]).join('').toUpperCase()
+    const avatarHtml = s.photo
+      ? `<div class="story-avatar" style="background-image:url('${s.photo}');background-size:cover;background-position:center"></div>`
+      : `<div class="story-avatar">${initials}</div>`
     return `
       <div class="story-card">
-        <div class="story-avatar">${initials}</div>
+        ${avatarHtml}
         <h3 class="story-name">${esc(s.name)}</h3>
         <div class="story-exam">${esc(s.exam)}</div>
         <div class="story-rank">${esc(s.rank)}</div>
@@ -347,6 +350,46 @@ function populateExamNotifications(data) {
   }).join('')
 }
 
+function populateGallery(data) {
+  if (!data) return
+  const gallery = data.gallery || []
+  const grid = document.getElementById('galleryGrid')
+  if (gallery.length === 0) {
+    grid.innerHTML = '<div class="no-content">No gallery items yet.</div>'
+    return
+  }
+  renderGalleryItems(gallery)
+
+  document.querySelectorAll('.gfilter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gfilter').forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+      const cat = btn.dataset.cat
+      const filtered = cat === 'all' ? gallery : gallery.filter(g => g.category === cat)
+      renderGalleryItems(filtered)
+    })
+  })
+}
+
+function renderGalleryItems(items) {
+  const grid = document.getElementById('galleryGrid')
+  grid.innerHTML = items.map(g => `
+    <div class="gallery-card">
+      <div class="gallery-img">
+        ${g.image ? `<img src="${g.image}" alt="${esc(g.title)}" />` : '<i class="ri-image-line"></i>'}
+      </div>
+      <div class="gallery-info">
+        <h4>${esc(g.title)}</h4>
+        <p>${esc(g.description)}</p>
+        <div class="gallery-meta">
+          <span class="gallery-cat">${esc(g.category)}</span>
+          <span class="gallery-date">${g.date}</span>
+        </div>
+      </div>
+    </div>
+  `).join('')
+}
+
 function populateCourseSelect(data) {
   if (!data) return
   const select = document.getElementById('cfCourse')
@@ -373,6 +416,7 @@ async function init() {
   populateFAQ(data)
   populateExamNotifications(data)
   populateBlogs(data)
+  populateGallery(data)
   populateCourseSelect(data)
 
   document.getElementById('loader').classList.add('hidden')

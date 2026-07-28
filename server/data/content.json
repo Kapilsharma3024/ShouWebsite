@@ -309,5 +309,37 @@
     }
   ],
   "posters": [],
-  "blogs": []
+  "blogs": [],
+  "gallery": [
+    {
+      "id": 1, "title": "Rahul Sharma - IAS AIR 87", "category": "achievement",
+      "description": "Our student Rahul Sharma secured All India Rank 87 in UPSC CSE 2025. Featured in Dainik Jagran.",
+      "image": "", "date": "2025-05-15"
+    },
+    {
+      "id": 2, "title": "Success Academy in The Hindu", "category": "newspaper",
+      "description": "Success Academy featured in The Hindu for producing 50+ government job selections in a single year.",
+      "image": "", "date": "2025-04-20"
+    },
+    {
+      "id": 3, "title": "Annual Result Celebration 2025", "category": "event",
+      "description": "Over 200 successful candidates honored at our annual result celebration ceremony.",
+      "image": "", "date": "2025-06-01"
+    },
+    {
+      "id": 4, "title": "7 Students Clear SSC CGL in One Batch", "category": "achievement",
+      "description": "Record-breaking performance! 7 students from a single batch cleared SSC CGL 2025.",
+      "image": "", "date": "2025-07-10"
+    },
+    {
+      "id": 5, "title": "Seminar on Government Job Opportunities", "category": "event",
+      "description": "Free seminar conducted for 500+ students on latest government job opportunities and exam strategies.",
+      "image": "", "date": "2025-03-22"
+    },
+    {
+      "id": 6, "title": "Success Academy Banner at Education Expo", "category": "banner",
+      "description": "Our booth at the National Education Expo 2025 attracted hundreds of aspiring candidates.",
+      "image": "", "date": "2025-02-14"
+    }
+  ]
 }

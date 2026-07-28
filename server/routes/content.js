@@ -315,4 +315,36 @@ router.delete('/exam-notifications/:id', (req, res) => {
   res.json({ success: true })
 })
 
+router.get('/gallery', (_req, res) => {
+  const content = readContent()
+  res.json(content.gallery || [])
+})
+
+router.post('/gallery', (req, res) => {
+  const content = readContent()
+  const item = { id: Date.now(), date: new Date().toISOString().split('T')[0], ...req.body }
+  if (!content.gallery) content.gallery = []
+  content.gallery.push(item)
+  writeContent(content)
+  res.json({ success: true, item })
+})
+
+router.put('/gallery/:id', (req, res) => {
+  const content = readContent()
+  const id = Number(req.params.id)
+  const index = (content.gallery || []).findIndex(g => g.id === id)
+  if (index === -1) return res.status(404).json({ error: 'Not found' })
+  content.gallery[index] = { ...content.gallery[index], ...req.body, id }
+  writeContent(content)
+  res.json({ success: true })
+})
+
+router.delete('/gallery/:id', (req, res) => {
+  const content = readContent()
+  const id = Number(req.params.id)
+  content.gallery = (content.gallery || []).filter(g => g.id !== id)
+  writeContent(content)
+  res.json({ success: true })
+})
+
 export default router
